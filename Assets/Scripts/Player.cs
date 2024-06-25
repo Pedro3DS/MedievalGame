@@ -13,15 +13,27 @@ public class Player : MonoBehaviour
     private bool isJumping = false;
     public bool isAlive = true;
 
+    private bool canTakeDamage = true;
+
     private SpriteRenderer render;
     private Animator anim;
     private Rigidbody2D rb2d;
+
+    private float invencibleSeconds;
+
+    public int lives;
+
+    private void Awake()
+    {
+        lives = 7;
+    }
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         render = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -42,11 +54,13 @@ public class Player : MonoBehaviour
 
         if (newX < Camera.main.ScreenToWorldPoint(Vector3.zero).x + (render.bounds.size.x / render.bounds.size.x))
         {
-            newX = Camera.main.ScreenToWorldPoint(Vector3.zero).x + (render.bounds.size.x / render.bounds.size.x);
-        }
-        if (newX > Camera.main.ScreenToWorldPoint(Vector3.zero).x * -1 - (render.bounds.size.x / render.bounds.size.x))
-        {
             newX = Camera.main.ScreenToWorldPoint(Vector3.zero).x * -1 - (render.bounds.size.x / render.bounds.size.x);
+            // UnityEngine.Debug.Log(Mathf.Abs(Camera.main.ScreenToWorldPoint(Vector3.zero).x));
+            // UnityEngine.Debug.Log();
+        }
+        else if (newX > (Camera.main.ScreenToWorldPoint(Vector3.zero).x * -1) - (render.bounds.size.x / render.bounds.size.x))
+        {
+            newX = Camera.main.ScreenToWorldPoint(Vector3.zero).x + (render.bounds.size.x / render.bounds.size.x);
         }
         transform.position = new Vector3(newX, transform.position.y, 0);
         anim.SetBool("Run", true);
@@ -62,6 +76,11 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("Run", false);
         }
+
+        if (!canTakeDamage)
+        {
+            Invencible();
+        }
     }
 
     void Jump()
@@ -69,6 +88,19 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+    }
+
+    void Invencible()
+    {
+        invencibleSeconds += Time.deltaTime;
+      
+        if (invencibleSeconds >= 2f)
+        {
+          
+            canTakeDamage = true;
+            invencibleSeconds = 0f;
+      
         }
     }
 
@@ -83,11 +115,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("WaterDrop"))
+        if (other.gameObject.CompareTag("WaterDrop") && canTakeDamage)
         {
+            lives --;
             isAlive = false;
-            gameObject.SetActive(false);
-            Destroy(other.gameObject);
+            canTakeDamage = false;
+            
+            //gameObject.SetActive(false);
+            //Destroy(other.gameObject);
             
         }
     }

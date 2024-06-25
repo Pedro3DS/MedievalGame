@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    //public float gravitySpeed;
-
-   
+    public float gravitySpeed;
+    public float bottom;
 
     void Start()
     {
@@ -16,16 +15,11 @@ public class Obstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.Translate(0f, - gravitySpeed * Time.deltaTime, 0f);
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
+        transform.Translate(0f, - gravitySpeed * Time.deltaTime, 0f);
+        if(transform.position.y < bottom){
             Destroy(gameObject);
         }
     }
+
 
 }

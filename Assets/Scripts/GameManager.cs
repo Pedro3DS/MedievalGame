@@ -7,50 +7,48 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject ball;
-    public TMP_Text score;
+    public Obstacle drop;
     public TMP_Text gameSeconds;
-    //public GameObject spawn;
-
+    public TMP_Text gameLives;
     private float spawnCadense;
-
-    public GameObject[] spawn;
-
+    private float spawnLimit = 2f;
     private float seconds;
-
-    private System.Random rdn;
-
+    private float gameTime = 60f;
+    private float obstacleSpeed = 1f;
     public GameObject player;
 
     void Start()
     {
-        rdn = new System.Random();
-        gameSeconds.text = "50";
-  
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        gameLives.text = $"Vidas: {player.GetComponent<Player>().lives}";
         spawnCadense += Time.deltaTime;
         
 
         seconds += Time.deltaTime;
-        gameSeconds.text = $"{50 - Mathf.Round(seconds)}";
+        gameSeconds.text = $"{gameTime - Mathf.Round(seconds)}";
 
-        if(50 - Mathf.Round(seconds) == 0)
-        {
-            SceneManager.LoadScene("SampleScene");
-        }
+        
 
-        if(spawnCadense >= 2f)
+        if(spawnCadense >= spawnLimit)
         {
-            int spawnIndex = rdn.Next(0, spawn.Length-1);
-            Instantiate(ball, spawn[spawnIndex].transform.position, Quaternion.identity);
+            Obstacle newObstacle = Instantiate(drop);
+            float spawnIndex = Random.Range(Camera.main.ScreenToWorldPoint(Vector3.zero).x, Camera.main.ScreenToWorldPoint(Vector3.zero).x * -1);
+            newObstacle.transform.position = new Vector2(spawnIndex, Camera.main.ScreenToWorldPoint(Vector3.zero).y * -1);
+            obstacleSpeed+=0.5f;
+            newObstacle.gravitySpeed += obstacleSpeed;
+            if(spawnLimit >= 0.6f)
+            {
+                spawnLimit -= 0.1f;
+            }
             spawnCadense = 0f;
+            
         }
-
-
+        Win();
         GameOver();
     }
 
@@ -58,7 +56,25 @@ public class GameManager : MonoBehaviour
     {
         if(!player.GetComponent<Player>().isAlive)
         {
-            SceneManager.LoadScene("SampleScene");
+            spawnLimit = 2f;
+            obstacleSpeed = 1f;
+            seconds = 0f;
+            player.transform.position = new Vector3(0f, -2.05f, 0f);
+            player.GetComponent<Player>().isAlive = true;
+
+        }
+        if (player.GetComponent<Player>().lives == 0)
+        {
+            SceneManager.LoadScene("LoseScene");
+
+        }
+    }
+
+    void Win()
+    {
+        if (gameTime - Mathf.Round(seconds) == 0)
+        {
+            SceneManager.LoadScene("WinScene");//TODO
         }
     }
 }
