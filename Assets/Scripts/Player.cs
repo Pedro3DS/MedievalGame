@@ -94,10 +94,12 @@ public class Player : MonoBehaviour
     void Invencible()
     {
         invencibleSeconds += Time.deltaTime;
-      
-        if (invencibleSeconds >= 2f)
+        render.material.SetColor("_Color", new Color(render.color.r, render.color.g, render.color.b, 0.5f));
+        //render.material.SetColor("_Color", new Color(render.color.r, render.color.g, render.color.b, 1f));
+
+        if (invencibleSeconds >= 3f)
         {
-          
+            render.material.SetColor("_Color", new Color(render.color.r, render.color.g, render.color.b, 1f));
             canTakeDamage = true;
             invencibleSeconds = 0f;
       
