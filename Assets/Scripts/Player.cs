@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,8 +10,7 @@ public class Player : MonoBehaviour
 
     public float speed;
     public float jumpForce;
-
-    private bool isJumping = false;
+    public bool isJumping = false;
     public bool isAlive = true;
 
     private bool canTakeDamage = true;
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
+        if (Input.GetButtonDown("Jump") && !isJumping)
         {
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }

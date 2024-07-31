@@ -495,7 +495,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0044016503, y: 0.92300004}
   m_AnchorMax: {x: 0.13639756, y: 1}
-  m_AnchoredPosition: {x: 2.1000366, y: 0}
+  m_AnchoredPosition: {x: 2.1000977, y: 0}
   m_SizeDelta: {x: 4.23, y: 0.0000076294}
   m_Pivot: {x: 0.5, y: 0.49999923}
 --- !u!114 &302902480
@@ -2348,7 +2348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 5
+  jumpForce: 7
+  isJumping: 0
   isAlive: 1
   lives: 0
 --- !u!50 &1750661186
@@ -2377,7 +2378,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1750661187
 BoxCollider2D:
   m_ObjectHideFlags: 0
