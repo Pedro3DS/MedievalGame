@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     public float gravitySpeed;
     public float bottom;
+    public bool isDestroyed = false;
 
     void Start()
     {
@@ -17,6 +18,8 @@ public class Obstacle : MonoBehaviour
     {
         transform.Translate(0f, - gravitySpeed * Time.deltaTime, 0f);
         if(transform.position.y < bottom){
+            isDestroyed = true;
+            Debug.Log("jklç");
             Destroy(gameObject);
         }
     }

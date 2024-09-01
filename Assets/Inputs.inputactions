@@ -1,0 +1,22 @@
+{
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "PLayer",
+            "id": "249dfc86-aeee-445d-bc50-d33b5487a40e",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "78497765-03e5-4ba8-ad4f-12988cc88836",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}

@@ -2348,7 +2348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 7
+  jumpForce: 5
   isJumping: 0
   isAlive: 1
   lives: 0

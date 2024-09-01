@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
     private float gameTime = 60f;
     private float obstacleSpeed = 1f;
     public GameObject player;
+
+    private Gamepad pad;
+    private Coroutine stopRumbleCoroutine;
 
     void Start()
     {
@@ -41,7 +45,8 @@ public class GameManager : MonoBehaviour
             newObstacle.transform.position = new Vector2(spawnIndex, Camera.main.ScreenToWorldPoint(Vector3.zero).y * -1);
             obstacleSpeed+=0.5f;
             newObstacle.gravitySpeed += obstacleSpeed;
-            if(spawnLimit >= 0.6f)
+            
+            if (spawnLimit >= 0.6f)
             {
                 spawnLimit -= 0.1f;
             }
@@ -56,6 +61,11 @@ public class GameManager : MonoBehaviour
     {
         if(!player.GetComponent<Player>().isAlive)
         {
+            pad = Gamepad.current;
+            if (pad != null) {
+                pad.SetMotorSpeeds(0.125f, 0.500f);
+                stopRumbleCoroutine = StartCoroutine(StopRumble(0.2f, pad));
+            }
             spawnLimit = 2f;
             obstacleSpeed = 1f;
             seconds = 0f;
@@ -76,5 +86,17 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("WinScene");//TODO
         }
+    }
+
+    private IEnumerator StopRumble(float durations, Gamepad gamepad)
+    {
+        float time = 0f;
+        while (time < durations)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        gamepad.SetMotorSpeeds(0f, 0f);
     }
 }
