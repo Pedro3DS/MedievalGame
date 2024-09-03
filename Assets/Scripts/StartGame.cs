@@ -7,7 +7,7 @@ public class StartGame : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetButtonDown("Start") && SceneManager.GetActiveScene().name == "StartScene" || SceneManager.GetActiveScene().name == "LoseScene")
+        if (Input.GetButtonDown("Start") && SceneManager.GetActiveScene().name != "SampleScene")
         {
             StartCatGame();
         }

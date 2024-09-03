@@ -18,10 +18,13 @@ public class Obstacle : MonoBehaviour
     {
         transform.Translate(0f, - gravitySpeed * Time.deltaTime, 0f);
         if(transform.position.y < bottom){
-            isDestroyed = true;
-            Debug.Log("jklç");
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+            isDestroyed = true;
     }
 
 
