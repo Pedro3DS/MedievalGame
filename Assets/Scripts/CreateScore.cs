@@ -30,7 +30,7 @@ public class CreateScore : MonoBehaviour
             dict.Add(playerInfo.Point, playerInfo.Player);
         };
 
-        var sortedDict = dict.OrderBy(pair => pair.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
+        var sortedDict = dict.OrderByDescending(pair => pair.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
 
 
         foreach (KeyValuePair<int, string> pair in sortedDict)
