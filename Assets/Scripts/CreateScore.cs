@@ -5,7 +5,7 @@ using System.Linq;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CreateScore : MonoBehaviour
 {
