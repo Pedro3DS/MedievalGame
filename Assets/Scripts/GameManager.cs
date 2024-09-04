@@ -11,10 +11,9 @@ public class GameManager : MonoBehaviour
     public Obstacle drop;
     public TMP_Text gameSeconds;
     public TMP_Text gameLives;
+    public TMP_Text gamePoints;
     private float spawnCadense;
     private float spawnLimit = 2f;
-    private float seconds;
-    private float gameTime = 60f;
     private float obstacleSpeed = 1f;
     public GameObject player;
 
@@ -23,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        PlayerPrefs.SetInt("Points", 0);
     }
 
     // Update is called once per frame
@@ -31,10 +30,10 @@ public class GameManager : MonoBehaviour
     {
         gameLives.text = $"Vidas: {player.GetComponent<Player>().lives}";
         spawnCadense += Time.deltaTime;
-        
 
-        seconds += Time.deltaTime;
-        gameSeconds.text = $"{gameTime - Mathf.Round(seconds)}";
+        gamePoints.text = $"{PlayerPrefs.GetInt("Points")}";
+
+
 
         
 
@@ -61,42 +60,37 @@ public class GameManager : MonoBehaviour
     {
         if(!player.GetComponent<Player>().isAlive)
         {
-            pad = Gamepad.current;
-            if (pad != null) {
-                pad.SetMotorSpeeds(0.125f, 0.500f);
-                stopRumbleCoroutine = StartCoroutine(StopRumble(0.2f, pad));
-            }
             spawnLimit = 2f;
-            obstacleSpeed = 1f;
-            seconds = 0f;
+            //obstacleSpeed = 1f;
             player.transform.position = new Vector3(0f, -2.05f, 0f);
             player.GetComponent<Player>().isAlive = true;
 
         }
         if (player.GetComponent<Player>().lives == 0)
         {
+
+            if (PlayerPrefs.GetString("Score") != "")
+            {
+                PlayerPrefs.SetString("Score", PlayerPrefs.GetString("Score") + "|" + PlayerPrefs.GetInt("Points").ToString());
+                PlayerPrefs.SetString("ScorePlayers", PlayerPrefs.GetString("ScorePlayers").ToString() + "|" + PlayerPrefs.GetString("Player"));
+            }
+            else
+            {
+                PlayerPrefs.SetString("Score", PlayerPrefs.GetInt("Points").ToString());
+                PlayerPrefs.SetString("ScorePlayers", PlayerPrefs.GetString("Player"));
+            }
             SceneManager.LoadScene("LoseScene");
+
 
         }
     }
 
     void Win()
     {
-        if (gameTime - Mathf.Round(seconds) == 0)
+        if (PlayerPrefs.GetInt("Points") >= 9999)
         {
             SceneManager.LoadScene("WinScene");//TODO
         }
     }
 
-    private IEnumerator StopRumble(float durations, Gamepad gamepad)
-    {
-        float time = 0f;
-        while (time < durations)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        gamepad.SetMotorSpeeds(0f, 0f);
-    }
 }

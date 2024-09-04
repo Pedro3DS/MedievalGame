@@ -6,7 +6,6 @@ public class Obstacle : MonoBehaviour
 {
     public float gravitySpeed;
     public float bottom;
-    public bool isDestroyed = false;
 
     void Start()
     {
@@ -24,7 +23,8 @@ public class Obstacle : MonoBehaviour
 
     private void OnDestroy()
     {
-            isDestroyed = true;
+        PlayerPrefs.SetInt("Points", PlayerPrefs.GetInt("Points") + 8);
+       
     }
 
 
