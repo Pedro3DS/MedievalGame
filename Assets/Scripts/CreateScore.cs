@@ -21,8 +21,8 @@ public class CreateScore : MonoBehaviour
         //PlayerPrefs.DeleteAll();
         scores = PlayerPrefs.GetString("Score");
         scoresList = Array.ConvertAll(scores.Split("|"), int.Parse);
-        playersList = scores.Split("|");
-        Array.Sort(scoresList);
+        playersList = PlayerPrefs.GetString("ScorePlayers").Split("|");
+        //Array.Sort(scoresList);
         var PlayerInfos = scoresList.Zip(playersList, (point, player) => new { Point = point, Player = player });
         Dictionary<int, string> dict = new Dictionary<int, string>();
         foreach (var playerInfo in PlayerInfos)
@@ -33,12 +33,10 @@ public class CreateScore : MonoBehaviour
         var sortedDict = dict.OrderBy(pair => pair.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
 
 
-        //GameObject newScoreText = Instantiate(scoreText, field);
-        //newScoreText.GetComponent<TMP_Text>().text = t;
-
         foreach (KeyValuePair<int, string> pair in sortedDict)
         {
-            Debug.Log($"{pair.Key}, {pair.Value}");
+            GameObject newScoreText = Instantiate(scoreText, field);
+            newScoreText.GetComponent<TMP_Text>().text = $"{pair.Value} - {pair.Key}";
         }
     }
 

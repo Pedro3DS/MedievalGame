@@ -3101,6 +3101,7 @@ GameObject:
   - component: {fileID: 1768034939}
   - component: {fileID: 1768034938}
   - component: {fileID: 1768034940}
+  - component: {fileID: 1768034941}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -3152,6 +3153,19 @@ MonoBehaviour:
   scores: 
   playersList: []
   scoresList: 
+--- !u!114 &1768034941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768034937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ed450ff8fa774fbfd857888515572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: {fileID: 1606951537}
 --- !u!1 &2030481755
 GameObject:
   m_ObjectHideFlags: 0
