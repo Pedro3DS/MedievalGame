@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     {
         if(!player.GetComponent<Player>().isAlive)
         {
-            spawnLimit = 2f;
+            //spawnLimit = 2f;
             //obstacleSpeed = 1f;
             player.transform.position = new Vector3(0f, -2.05f, 0f);
             player.GetComponent<Player>().isAlive = true;

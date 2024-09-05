@@ -9,8 +9,9 @@ public class StartGame : MonoBehaviour
     {
         if (Input.GetButtonDown("Start") && SceneManager.GetActiveScene().name == "StartScene")
         {
-            StartCatGame();
+            SceneManager.LoadScene("SelectNameScene");
         }
+
         if (Input.GetButtonDown("Start") && SceneManager.GetActiveScene().name == "LoseScene" || SceneManager.GetActiveScene().name == "WinScene")
         {
             RestartGame();
